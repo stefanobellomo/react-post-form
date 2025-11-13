@@ -1,20 +1,30 @@
 import { useState } from "react"
+import axios from "axios"
+
 function App() {
 
-    const apiForm = 'https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts'
+    const endpoint = 'https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts'
 
-    const [infoUser, setInfoUser] = useState(
-        {
-            "author": "",
-            "title": "",
-            "body": "",
-            "public": true,
-        }
-    )
+    const initialFormData =
+    {
+        "author": "",
+        "title": "",
+        "body": "",
+        "public": true,
+    }
+
+    const [formData, setFormData] = useState(initialFormData)
 
     function handleSubmit(e) {
         e.preventDefault()
 
+        axios.post(endpoint, formData, {
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => {
+                console.log(response);
+                setFormData(initialFormData)
+            })
     }
 
     return (
@@ -29,8 +39,8 @@ function App() {
                             type="text"
                             name="name"
                             className="form-control"
-                            value={infoUser.author}
-                            onChange={(e) => setInfoUser({ ...infoUser, author: e.target.value })}
+                            value={formData.author}
+                            onChange={(e) => setFormData({ ...formData, author: e.target.value })}
                             required
                         />
                     </div>
@@ -41,8 +51,8 @@ function App() {
                             type="text"
                             name="title"
                             className="form-control"
-                            value={infoUser.title}
-                            onChange={(e) => setInfoUser({ ...infoUser, title: e.target.value })}
+                            value={formData.title}
+                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             required
                         />
                     </div>
@@ -53,8 +63,8 @@ function App() {
                             name="body"
                             className="form-control"
                             rows="4"
-                            value={infoUser.body}
-                            onChange={(e) => setInfoUser({ ...infoUser, body: e.target.value })}
+                            value={formData.body}
+                            onChange={(e) => setFormData({ ...formData, body: e.target.value })}
                             required
                         />
                     </div>
@@ -65,8 +75,8 @@ function App() {
                             name="public"
                             id="public"
                             className="form-check-input"
-                            checked={infoUser.public}
-                            onChange={(e) => setInfoUser({ ...infoUser, public: e.target.checked })}
+                            checked={formData.public}
+                            onChange={(e) => setFormData({ ...formData, public: e.target.checked })}
                         />
                         <label className="form-check-label" htmlFor="updates">Desideri che venga pubblicato (check) o che resti una bozza (lascia libero il campo)?</label>
                     </div>
