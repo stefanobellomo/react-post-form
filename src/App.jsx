@@ -15,8 +15,20 @@ function App() {
 
     const [formData, setFormData] = useState(initialFormData)
 
+    function handleClick(e) {
+
+        const { name, value, type, checked } = e.target
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: (type === "checkbox" ? checked : value)
+        }))
+    }
+
     function handleSubmit(e) {
         e.preventDefault()
+
+
 
         axios.post(endpoint, formData, {
             headers: { 'Content-Type': 'application/json' }
@@ -37,10 +49,11 @@ function App() {
                         <label className="form-label">Nome</label>
                         <input
                             type="text"
-                            name="name"
+                            name="author"
                             className="form-control"
                             value={formData.author}
-                            onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                            onChange={handleClick}
+                            // onChange={(e) => setFormData({ ...formData, author: e.target.value })}
                             required
                         />
                     </div>
@@ -52,7 +65,8 @@ function App() {
                             name="title"
                             className="form-control"
                             value={formData.title}
-                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                            onChange={handleClick}
+                            // onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             required
                         />
                     </div>
@@ -64,7 +78,8 @@ function App() {
                             className="form-control"
                             rows="4"
                             value={formData.body}
-                            onChange={(e) => setFormData({ ...formData, body: e.target.value })}
+                            onChange={handleClick}
+                            // onChange={(e) => setFormData({ ...formData, body: e.target.value })}
                             required
                         />
                     </div>
@@ -76,7 +91,8 @@ function App() {
                             id="public"
                             className="form-check-input"
                             checked={formData.public}
-                            onChange={(e) => setFormData({ ...formData, public: e.target.checked })}
+                            onChange={handleClick}
+                        // onChange={(e) => setFormData({ ...formData, public: e.target.checked })}
                         />
                         <label className="form-check-label" htmlFor="updates">Desideri che venga pubblicato (check) o che resti una bozza (lascia libero il campo)?</label>
                     </div>
