@@ -3,7 +3,7 @@ import axios from "axios"
 
 function App() {
 
-    const endpoint = 'https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts'
+    const endpoint = 'https://67c5b4f3351c081993fb1ab6.mockapi.io/api/post'
 
     const initialFormData =
     {
@@ -14,6 +14,10 @@ function App() {
     }
 
     const [formData, setFormData] = useState(initialFormData)
+    const [message, setMessage] = useState({
+        text: '',
+        type: true,
+    })
 
     function handleClick(e) {
 
@@ -36,6 +40,10 @@ function App() {
             .then(response => {
                 console.log(response);
                 setFormData(initialFormData)
+                setMessage({ text: 'Hai completato il form correttamente!', type: true })
+            })
+            .catch(err => {
+                setMessage({ text: err.message, type: false })
             })
     }
 
@@ -98,6 +106,8 @@ function App() {
                     </div>
                     {/* Pulsante di invio */}
                     <button type="submit" className="btn btn-primary">Invia richiesta</button>
+                    {/* {message.text && <p>{message.text}</p>} */}
+                    {message.type ? <p className="text-success">{message.text}</p> : <p className="text-danger">{message.text}</p>}
                 </form>
             </div>
         </>
