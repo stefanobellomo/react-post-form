@@ -12,12 +12,16 @@ function App() {
         }
     )
 
+    function handleSubmit(e) {
+        e.preventDefault()
+
+    }
 
     return (
         <>
             <div className="container mt-4">
                 <h2>Richiesta apertura Ticket</h2>
-                <form className="p-4 border rounded bg-light">
+                <form className="p-4 border rounded bg-light" onSubmit={handleSubmit}>
                     {/* Nome */}
                     <div className="mb-3">
                         <label className="form-label">Nome</label>
@@ -26,6 +30,7 @@ function App() {
                             name="name"
                             className="form-control"
                             value={infoUser.author}
+                            onChange={(e) => setInfoUser({ ...infoUser, author: e.target.value })}
                             required
                         />
                     </div>
@@ -37,6 +42,7 @@ function App() {
                             name="title"
                             className="form-control"
                             value={infoUser.title}
+                            onChange={(e) => setInfoUser({ ...infoUser, title: e.target.value })}
                             required
                         />
                     </div>
@@ -44,10 +50,11 @@ function App() {
                     <div className="mb-3">
                         <label className="form-label">Descrizione del problema</label>
                         <textarea
-                            name="description"
+                            name="body"
                             className="form-control"
                             rows="4"
                             value={infoUser.body}
+                            onChange={(e) => setInfoUser({ ...infoUser, body: e.target.value })}
                             required
                         />
                     </div>
@@ -59,7 +66,7 @@ function App() {
                             id="public"
                             className="form-check-input"
                             checked={infoUser.public}
-                        // onChange={(e) => setInfoUser({ ...infoUser, public: e.target.checked })}
+                            onChange={(e) => setInfoUser({ ...infoUser, public: e.target.checked })}
                         />
                         <label className="form-check-label" htmlFor="updates">Desideri che venga pubblicato (check) o che resti una bozza (lascia libero il campo)?</label>
                     </div>
